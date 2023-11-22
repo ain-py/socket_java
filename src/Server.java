@@ -65,8 +65,9 @@ public class Server {
 
     public static void sendToClients( Socket client, int[] arr, String message) {
         try{
-            country ctr = new country();
+            WordFilter ctr = new WordFilter();
             String res_message = ctr.changeToIndia(message);
+            res_message = ctr.filterBadWords(res_message);
             for (int pos : arr) {
                 PrintWriter out = new PrintWriter(clientSockets.get(pos-1).getOutputStream(), true);
                 out.println(res_message);
