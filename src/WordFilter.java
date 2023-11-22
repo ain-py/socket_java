@@ -1,4 +1,103 @@
-public class country {
+public class WordFilter {
+
+    public String[] bad_words = {
+        "abbo",
+        "abo",
+        "beeyotch",
+        "biatch",
+        "bitch",
+        "chinaman",
+        "chinamen",
+        "chink",
+        "coolie",
+        "coon",
+        "crazie",
+        "crazy",
+        "crip",
+        "cuck",
+        "cunt",
+        "dago",
+        "daygo",
+        "dego",
+        "dick",
+        "douchebag",
+        "dumb",
+        "dyke",
+        "eskimo",
+        "fag",
+        "faggot",
+        "fatass",
+        "fatso",
+        "gash",
+        "gimp",
+        "gip",
+        "golliwog",
+        "gook",
+        "gyp",
+        "gypsy",
+        "half-breed",
+        "halfbreed",
+        "heeb",
+        "homo",
+        "hooker",
+        "idiot",
+        "insane",
+        "insanitie",
+        "insanity",
+        "jap",
+        "kaffer",
+        "kaffir",
+        "kaffir",
+        "kaffre",
+        "kafir",
+        "kike",
+        "kraut",
+        "lame",
+        "lardass",
+        "lesbo",
+        "lunatic",
+        "mick",
+        "negress",
+        "negro",
+        "nig",
+        "nig-nog",
+        "nigga",
+        "nigger",
+        "nigguh",
+        "nip",
+        "pajeet",
+        "paki",
+        "pickaninnie",
+        "pickaninny",
+        "prostitute",
+        "pussie",
+        "pussy",
+        "raghead",
+        "retard",
+        "sambo",
+        "shemale",
+        "skank",
+        "slut",
+        "soyboy",
+        "spade",
+        "sperg",
+        "spic",
+        "spook",
+        "squaw",
+        "street-shitter",
+        "tard",
+        "tits",
+        "titt",
+        "trannie",
+        "tranny",
+        "twat",
+        "wetback",
+        "whore",
+        "wigger",
+        "wop",
+        "yid",
+        "zog"
+    };
 
     public String[] countries = {
             "Afghanistan", 
@@ -246,9 +345,18 @@ public class country {
             "Zimbabwe"
     };
 
-    public boolean findInArr(String s) {
+    public boolean findCountryInArr(String s) {
         for(int i = 0; i<countries.length; i++) {
-            if(countries[i].equals(s)) {
+            if((countries[i].toLowerCase()).equals(s.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean findWordInArr(String s) {
+        for(int i = 0; i<bad_words.length; i++) {
+            if((bad_words[i].toLowerCase()).equals(s.toLowerCase())) {
                 return true;
             }
         }
@@ -260,7 +368,7 @@ public class country {
         String[] parts = str.split(" ");
 
         for(int i = 0; i<parts.length; i++) {
-            if(findInArr(parts[i])) {
+            if(findCountryInArr(parts[i])) {
                 res += "India ";
             } else {
                 res += parts[i];
@@ -269,7 +377,23 @@ public class country {
         }
         return res;
     }
+
+    public String filterBadWords(String str) {
+        String res = "";
+        String[] parts = str.split(" ");
+
+        for(int i = 0; i<parts.length; i++) {
+            if(findWordInArr(res)) {
+                res += "**** ";
+            } else {
+                res += parts[i];
+            }
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
-        System.out.println("This is country class");
+        System.out.println("This is word filter class");
     }    
 }
