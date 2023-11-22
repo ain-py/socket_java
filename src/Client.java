@@ -29,7 +29,7 @@ public class Client {
         return result;
     }
     public static void main(String[] args) {
-        String serverAddress = "localhost"; // Change this to the server's address
+        String serverAddress = "192.168.3.160"; // Change this to the server's address
         int serverPort = 5000; // Change this to the server's port
 
         try (Socket socket = new Socket(serverAddress, serverPort);
