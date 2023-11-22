@@ -10,7 +10,10 @@ public class Client {
  
         for (int i=0; i<text.length(); i++)
         {
-            if (Character.isUpperCase(text.charAt(i)))
+            if(text.charAt(i) == ' ' || text.charAt(i) == 'y' || text.charAt(i) == 'z') {
+                result.append(text.charAt(i));
+            }
+            else if (Character.isUpperCase(text.charAt(i)))
             {
                 char ch = (char)(((int)text.charAt(i) +
                                   s - 65) % 26 + 65);

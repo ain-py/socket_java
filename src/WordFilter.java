@@ -76,6 +76,7 @@ public class WordFilter {
         "retard",
         "sambo",
         "shemale",
+        "shit",
         "skank",
         "slut",
         "soyboy",
@@ -311,7 +312,7 @@ public class WordFilter {
             "Sweden", 
             "Switzerland", 
             "Syrian Arab Republic", 
-            "Taiwan, Province of China", 
+            "Taiwan", 
             "Tajikistan", 
             "Tanzania, United Republic of", 
             "Thailand", 
@@ -347,7 +348,10 @@ public class WordFilter {
 
     public boolean findCountryInArr(String s) {
         for(int i = 0; i<countries.length; i++) {
-            if((countries[i].toLowerCase()).equals(s.toLowerCase())) {
+            String country = countries[i].toLowerCase();
+
+            if(country.equals(s.toLowerCase())) {
+                System.out.println("Wrong country found!!!");
                 return true;
             }
         }
@@ -356,7 +360,9 @@ public class WordFilter {
     
     public boolean findWordInArr(String s) {
         for(int i = 0; i<bad_words.length; i++) {
-            if((bad_words[i].toLowerCase()).equals(s.toLowerCase())) {
+            String bw = bad_words[i].toLowerCase();
+            if(bw.equals(s.toLowerCase())) {
+                System.out.println("Bad word found!!!");
                 return true;
             }
         }
@@ -368,11 +374,12 @@ public class WordFilter {
         String[] parts = str.split(" ");
 
         for(int i = 0; i<parts.length; i++) {
+            System.out.println(parts[i]);
             if(findCountryInArr(parts[i])) {
                 res += "India ";
             } else {
                 res += parts[i];
-                res += " ";
+                res += ' ';
             }
         }
         return res;
@@ -383,10 +390,12 @@ public class WordFilter {
         String[] parts = str.split(" ");
 
         for(int i = 0; i<parts.length; i++) {
-            if(findWordInArr(res)) {
+            System.out.println(parts[i]);
+            if(findWordInArr(parts[i])) {
                 res += "**** ";
             } else {
                 res += parts[i];
+                res += " ";
             }
         }
 

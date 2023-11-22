@@ -63,14 +63,14 @@ public class Server {
         }
     }
 
-    public static void sendToClients( Socket client, int[] arr, String message) {
+    public static void sendToClients( Socket client, int[] arr, String message, String timeStamp) {
         try{
-            WordFilter ctr = new WordFilter();
-            String res_message = ctr.changeToIndia(message);
-            res_message = ctr.filterBadWords(res_message);
+            // WordFilter ctr = new WordFilter();
+            // String res_message = ctr.changeToIndia(message);
+            // res_message = ctr.filterBadWords(res_message);
             for (int pos : arr) {
                 PrintWriter out = new PrintWriter(clientSockets.get(pos-1).getOutputStream(), true);
-                out.println(res_message);
+                out.println(message+" "+timeStamp);
             }
         } catch(IOException e) {
             e.printStackTrace();
@@ -151,12 +151,18 @@ class ClientHandler implements Runnable {
                 }
                 
                   FileWriter Writer
-                = new FileWriter("logs.txt");
+                = new FileWriter("logs.txt", true);
             Writer.write(
-                "Client "+ clientNum +": "+ decString);
+                "Client "+ clientNum +": "+ decString +" time " + s[1] + "\n");
                  Writer.close();
-                System.out.println("Broadcast the message : \'" + decString + "\' to " + clientNum);
-                Server.sendToClients(clientSocket, pos, decString + " time :" + s[1]);
+                 
+                 WordFilter ctr = new WordFilter();
+                 String res_message = ctr.changeToIndia(decString);
+                 res_message = ctr.filterBadWords(res_message);
+                 
+                System.out.println("Broadcast the message : \'" + res_message + "\' to " + clientNum);
+                
+                Server.sendToClients(clientSocket, pos, res_message, "time :" + s[1]);
                 Server.fetchNextClient(clientSocket,  clientNo+1);
             }
         } catch (IOException e) {
@@ -178,7 +184,10 @@ class ClientHandler implements Runnable {
  
         for (int i=0; i<text.length(); i++)
         {
-            if (Character.isUpperCase(text.charAt(i)))
+            if(text.charAt(i) == ' ' || text.charAt(i) == 'y' || text.charAt(i) == 'z') {
+                result.append(text.charAt(i));
+            }
+            else if (Character.isUpperCase(text.charAt(i)))
             {
                 char ch = (char)(((int)text.charAt(i) -
                                   s - 65) % 26 + 65);
