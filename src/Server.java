@@ -149,6 +149,12 @@ class ClientHandler implements Runnable {
                 else{
                     decString += " is not a palindrome";
                 }
+                
+                  FileWriter Writer
+                = new FileWriter("logs.txt");
+            Writer.write(
+                "Client "+ clientNum +": "+ decString);
+                 Writer.close();
                 System.out.println("Broadcast the message : \'" + decString + "\' to " + clientNum);
                 Server.sendToClients(clientSocket, pos, decString + " time :" + s[1]);
                 Server.fetchNextClient(clientSocket,  clientNo+1);
